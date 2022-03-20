@@ -1,6 +1,8 @@
 import 'package:html/parser.dart' as parser;
 import 'package:http/http.dart' as http;
 
+import '../models/product_model.dart';
+
 class WebScrab {
   List<ProductModel> products = [];
   int productsLength = 0;
@@ -63,12 +65,4 @@ class WebScrab {
       print("no");
     }
   }
-}
-
-class ProductModel {
-  ProductModel(
-      {required this.title, required this.price, required this.imgUrl});
-  final String title;
-  final String price;
-  final String imgUrl;
 }
