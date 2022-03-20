@@ -13,12 +13,13 @@ class WebScrab {
           ProductModel(
               title: "title", price: "  ", imgUrl: "image/catalog/logo2.png"));
     }
+    print("done");
   }
 
   Future<ProductModel?> extractData(int productNumber) async {
     // Getting the response from the targeted url
     final response = await http.Client().get(Uri.parse(
-        'https://www.sigma-computer.com/subcategory?id=1&cname=Desktop&id2=4&scname=Processors'));
+        'https://www.sigma-computer.com/subcategory?id=1&cname=Desktop&id2=4&scname=Processors&page=2'));
 
     // Status Code 200 means response has been received successfully
     if (response.statusCode == 200) {
@@ -27,14 +28,18 @@ class WebScrab {
 
       try {
         // Scraping the first article title
+        int pageLength =
+            document.getElementsByClassName("pagination")[0].children.length -
+                2;
+        print(pageLength);
         productsLength =
             document.getElementById("show_items")?.children.length ?? 0;
-        print(productsLength);
+        // print(productsLength);
         var responseString1 = document
             .getElementsByClassName('product-item-container')[productNumber]
             .children[1]
             .children[1];
-        print(responseString1.text.trim());
+        // print(responseString1.text.trim());
 
         // Scraping the second article title
         var responseString2 = document
@@ -43,7 +48,7 @@ class WebScrab {
             .children[0]
             .children[0]
             .children[0];
-        print(responseString2.attributes.values.first.toString());
+        // print(responseString2.attributes.values.first.toString());
 
         // Scraping the third article title
         var responseString3 = document
@@ -59,10 +64,10 @@ class WebScrab {
           imgUrl: responseString2.attributes.values.first.toString(),
         );
       } catch (e) {
-        print(e.toString());
+        // print(e.toString());
       }
     } else {
-      print("no");
+      // print("no");
     }
   }
 }
