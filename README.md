@@ -1,4 +1,4 @@
-# get_comp
+# Flutter Web Scrap Project
 
 A new Flutter project.
 
