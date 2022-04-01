@@ -16,33 +16,35 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  List<Product> products = [];
   WebScrab webScrab = WebScrab();
-  bool isLoading = false;
-  Future getList() async {
-    isLoading = true;
-    await webScrab.extractData(1);
-    await webScrab.addProduct();
-    isLoading = false;
-  }
-
   @override
   void initState() {
     super.initState();
-    getList();
+    webScrab.extractData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(title: const Text('Sigma ')),
-      body: ListView(
-        children: List.generate(
-          webScrab.products.length,
-          (index) => ProductCard(
-              title: webScrab.products[index].title,
-              price: webScrab.products[index].price,
-              imgUrl: webScrab.products[index].imgUrl),
-        ),
+      body: FutureBuilder<List<Product>?>(
+        future: webScrab.extractData(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            List<Product>? products = snapshot.data;
+            return ListView.builder(
+                itemCount: products!.length,
+                itemBuilder: (context, index) {
+                  return ProductCard(
+                      title: products[index].title,
+                      price: products[index].price,
+                      imgUrl: products[index].imgUrl);
+                });
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }
