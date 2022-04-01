@@ -4,10 +4,9 @@ Flutter Project To Scrap Some Data From Website "https://www.sigma-computer.com/
 
 **Packages used**
 ```
-1-[http: ^0.13.4](https://pub.dev/packages/http)
-2-[html: ^0.15.0](https://pub.dev/packages/html)
-```
- 
+[1-http: ^0.13.4](https://pub.dev/packages?q=html)
+[2-html: ^0.15.0](https://pub.dev/packages/html)
+ ```
 **Video From Windows version of this app**
 
 
